@@ -1,6 +1,5 @@
 /**
- * Implementação da Tabela Hash usando a função hash do Renato.
- * Na entrega final, substituir o bloco de MODO_TESTE pela implementação oficial.
+ * Implementação da Tabela Hash usando algoritmo DJB2.
  */
 public class TabelaHashMetodo2 extends TabelaHash {
 
@@ -10,35 +9,32 @@ public class TabelaHashMetodo2 extends TabelaHash {
 
     @Override
     public String getNomeFuncaoHash() {
-        if (Main.MODO_TESTE) return "TESTE - Hash Simples 2 (Jafte)";
-        return "PENDENTE - Renato";
+        return "Método 2: DJB2 (Daniel J. Bernstein)";
     }
 
     @Override
     protected int calcularHash(String chave, int capacidade) {
-        if (Main.MODO_TESTE) {
-            // ========================================
-            // Hash temporário APENAS para testes locais.
-            // NÃO ENTREGAR ASSIM.
-            // ========================================
-            int h = chave.hashCode();
-            return Math.abs(h % capacidade);
+        // Implementação do algoritmo DJB2
+
+        /*
+        * Os valores iniciais podem ser:
+        * - 5381: É um número primo que Bernstein escolheu empiricamente por produzir boas distribuições
+        * - 33: Foi escolhido porque permite otimização com shift de bits e produzindo boa dispersão
+        */
+
+        if (chave == null || chave.isEmpty()) {
+            return 0;
         }
 
-        // ========================================
-        // ATENÇÃO RENATO: IMPLEMENTAR AQUI
-        // Sugestões:
-        //  - DJB2
-        //  - FNV-1a
-        // Exemplo (DJB2):
-        // long hash = 5381;
-        // for (int i = 0; i < chave.length(); i++) {
-        //     hash = ((hash << 5) + hash) + chave.charAt(i);
-        // }
-        // return (int)(Math.abs(hash) % capacidade);
-        // ========================================
-        throw new IllegalStateException(
-                "ATENÇÃO RENATO: implementar a função hash (DJB2 ou FNV-1a)."
-        );
+        long hash = 5381;
+
+        for (int i = 0; i < chave.length(); i++) {
+            char c = chave.charAt(i);
+            // hash * 33 + c (usando shift de bits para otimização)
+            hash = ((hash << 5) + hash) + c;
+        }
+
+        // Garante que o resultado seja positivo e dentro do range [0, capacidade-1]
+        return (int)((hash & 0x7FFFFFFF) % capacidade);
     }
 }
