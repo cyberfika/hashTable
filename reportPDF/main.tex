@@ -1,0 +1,260 @@
+\documentclass[12pt,a4paper]{abntex2}
+
+% =========================
+% Pacotes essenciais
+% =========================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}                 % fonte base
+\renewcommand{\familydefault}{\sfdefault} % força sans-serif (Arial-like)
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{float}                   % para [H]
+\usepackage{booktabs}                % tabelas mais bonitas
+\usepackage{array}                   % colunas personalizadas
+\usepackage{longtable}               % tabelas longas (se necessário)
+\usepackage{listings}                % blocos de código / ASCII
+\usepackage{caption}                 % controle fino de legendas
+\usepackage{hyperref}                % links
+\usepackage{enumitem}                % listas mais flexíveis
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue
+}
+
+% =========================
+% Configuração ABNT e layout
+% =========================
+\setcounter{secnumdepth}{3}
+\renewcommand{\thesection}{\arabic{section}}
+
+\geometry{
+  a4paper,
+  left=3cm,
+  right=2cm,
+  top=3cm,
+  bottom=2cm
+}
+
+% Espaçamento 1,5
+\OnehalfSpacing
+
+% =========================
+% Configuração de listagens (ASCII / Saídas do Java)
+% =========================
+\lstdefinestyle{console}{
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  keepspaces=true,
+  tabsize=2
+}
+
+% =========================
+% Macros de placeholder em LATIM (com nome do aluno)
+% =========================
+\newcommand{\placeholderAluno}[1]{\textit{Lorem ipsum dolor sit amet, consectetur adipiscing elit — #1.}}
+\newcommand{\placeholderAlunoLongo}[1]{\textit{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper nunc est, et rutrum dui interdum quis — #1.}}
+
+% =========================
+% Título / Autores / Curso
+% =========================
+\title{Relatório Técnico -- Comparativo de Funções Hash em Java}
+\author{
+  Fernando Alonso Piroga da Silva \\
+  Jafte Carneiro Fagundes da Silva \\
+  Renato Pestana Gouveia
+}
+\date{\textbf{Pontifícia Universidade Católica do Paraná} \\ Resolução de Problemas Estruturados em Computação}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+% =========================
+% 1. INTRODUÇÃO
+% =========================
+\section{Introdução}
+Este relatório apresenta a implementação manual de \textit{tabelas hash} em Java, comparando a eficiência de duas funções de dispersão (\textit{hash functions}) distintas, sem utilizar estruturas de dados prontas (\textit{ArrayList}, \textit{LinkedList}, \textit{HashMap}, etc.). O foco está na aplicação dos princípios de Programação Orientada a Objetos (POO), na análise de colisões, no tratamento por encadeamento, e no redimensionamento com \textit{rehashing}.
+
+\placeholderAluno{Jafte}
+
+\subsection{Objetivo}
+Comparar o desempenho de duas funções hash de complexidade média aplicadas sobre um conjunto de 5000 nomes, medindo colisões, tempo de inserção, tempo de busca, fator de carga, distribuição das chaves e clusterização.
+
+\placeholderAluno{Jafte}
+
+\subsection{Escopo e Organização}
+O trabalho contempla: (i) implementação base abstrata; (ii) duas implementações concretas que diferem apenas na função hash; (iii) coleta de métricas; (iv) relatório comparativo. Os resultados numéricos e gráficos ASCII apresentados nas seções seguintes serão preenchidos com a saída do programa Java.
+
+\placeholderAluno{Jafte}
+
+% =========================
+% 2. ARQUITETURA E POO
+% =========================
+\section{Arquitetura e Princípios de POO}
+A solução foi estruturada com ênfase em encapsulamento, abstração, herança e polimorfismo. A classe abstrata \texttt{TabelaHash} define a interface e a lógica comum, enquanto as subclasses implementam a função hash específica. O tratamento de colisões é feito via \textit{chaining} com \texttt{ListaEncadeada} e nós (\texttt{Node}) implementados manualmente.
+
+\subsection{Diagrama de Componentes (alto nível)}
+\begin{itemize}[noitemsep]
+  \item \texttt{TabelaHash} (abstrata): inserir, buscar, redimensionar, métricas.
+  \item \texttt{TabelaHashMetodo1}: sobrescreve \texttt{calcularHash()} -- (Fernando).
+  \item \texttt{TabelaHashMetodo2}: sobrescreve \texttt{calcularHash()} -- (Renato).
+  \item \texttt{ListaEncadeada} e \texttt{Node}: encadeamento manual.
+  \item \texttt{LeitorArquivo}: leitura do arquivo \texttt{data/female\_names.txt}.
+  \item \texttt{MedidorPerformance} e \texttt{RelatorioComparativo}: métricas/saídas.
+\end{itemize}
+
+\placeholderAlunoLongo{Jafte}
+
+% =========================
+% 3. FUNÇÕES HASH IMPLEMENTADAS
+% =========================
+\section{Funções Hash Implementadas}
+
+\subsection{Função Hash 1 -- Método da Multiplicação (Fernando)}
+Descrição teórica sucinta do método da multiplicação (Knuth), utilização de constante irracional \(A \approx 0.6180339887\), cálculo da parte fracionária e mapeamento para o intervalo da capacidade.
+
+\placeholderAluno{Fernando}
+
+\subsubsection*{Assinatura e Esboço (Java)}
+\begin{lstlisting}[style=console]
+protected int calcularHash(String chave, int capacidade) {
+    // Método da Multiplicação (Knuth) - implementar
+    // Lorem ipsum — Fernando
+}
+\end{lstlisting}
+
+\subsection{Função Hash 2 -- DJB2 (Renato)}
+Descrição teórica sucinta do algoritmo DJB2, motivação histórica, comportamento de dispersão e custo computacional.
+
+\placeholderAluno{Renato}
+
+\subsubsection*{Assinatura e Esboço (Java)}
+\begin{lstlisting}[style=console]
+protected int calcularHash(String chave, int capacidade) {
+    // DJB2 - implementar
+    // Lorem ipsum — Renato
+}
+\end{lstlisting}
+
+% =========================
+% 4. TRATAMENTO DE COLISÕES
+% =========================
+\section{Tratamento de Colisões: Encadeamento (Chaining)}
+As colisões são tratadas por listas encadeadas simples implementadas manualmente. Para cada índice da tabela, mantém-se uma \texttt{ListaEncadeada} que armazena nós do tipo \texttt{Node}. Inserções em posições já ocupadas elevam o contador de colisões.
+
+\placeholderAluno{Jafte}
+
+% =========================
+% 5. REDIMENSIONAMENTO E REHASHING
+% =========================
+\section{Redimensionamento e Rehashing}
+O redimensionamento é disparado quando o fator de carga atinge o limite configurado (sugestão: 0{,}75). A capacidade dobra (\(32 \rightarrow 64 \rightarrow 128 \rightarrow \ldots\)) e realiza-se rehashing de todos os elementos.
+
+\placeholderAluno{Jafte}
+
+% =========================
+% 6. CONFIGURAÇÃO DE EXECUÇÃO
+% =========================
+\section{Configuração de Execução}
+\begin{itemize}
+  \item Capacidade inicial: \textbf{32}.
+  \item Fator de carga: \textbf{0,75}.
+  \item Arquivo de entrada: \texttt{data/female\_names.txt} (5000 nomes).
+  \item Método de colisão: \textbf{Encadeamento (Lista Encadeada manual)}.
+\end{itemize}
+
+\placeholderAluno{Jafte}
+
+% =========================
+% 7. RESULTADOS DOS TESTES (PLACEHOLDERS PARA SAÍDAS DO JAVA)
+% =========================
+\section{Resultados dos Testes}
+
+\subsection{Resumo de Métricas (Tabela Comparativa)}
+% ==== Cole aqui a tabela gerada no console ou preencha manualmente ====
+\begin{table}[H]
+\centering
+\caption{Comparativo de eficiência das funções hash.}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Função Hash} & \textbf{Colisões} & \textbf{Redim.} & \textbf{Inserção (ms)} & \textbf{Busca (ms)} & \textbf{Fator de Carga} \\
+\midrule
+Multiplicação (Fernando) & \textit{Lorem ipsum — Fernando} & \textit{Lorem ipsum — Fernando} & \textit{Lorem ipsum — Fernando} & \textit{Lorem ipsum — Fernando} & \textit{Lorem ipsum — Fernando} \\
+DJB2 (Renato)            & \textit{Lorem ipsum — Renato}   & \textit{Lorem ipsum — Renato}   & \textit{Lorem ipsum — Renato}   & \textit{Lorem ipsum — Renato}   & \textit{Lorem ipsum — Renato} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Distribuição das Chaves (Histograma ASCII)}
+% ==== Cole aqui a saída ASCII do método mostrarDistribuicao() (ou versão resumida) ====
+\begin{lstlisting}[style=console, caption={Distribuição das chaves por posição (hash 1 e/ou hash 2).}]
+Lorem ipsum dolor sit amet — Jafte
+\end{lstlisting}
+
+\subsection{Análise de Clusterização (Top N Posições)}
+% ==== Cole aqui as posições com maiores comprimentos de listas/colisões ====
+\begin{lstlisting}[style=console, caption={Posições mais congestionadas (exemplo).}]
+Lorem ipsum dolor sit amet — Jafte
+\end{lstlisting}
+
+\subsection{Tempo de Execução: Inserção e Busca}
+% ==== Cole aqui o trecho do console com tempos em ms ====
+\begin{lstlisting}[style=console, caption={Tempos de inserção e busca (ms).}]
+Lorem ipsum dolor sit amet — Jafte
+\end{lstlisting}
+
+% =========================
+% 8. DISCUSSÃO E ANÁLISE
+% =========================
+\section{Discussão e Análise}
+\subsection{Comparação entre as Funções}
+Discussão sobre dispersão, quantidade de colisões, estabilidade dos tempos, influência do redimensionamento.
+
+\placeholderAluno{Jafte}
+
+\subsection{Impacto do Tratamento de Colisões}
+Análise do encadeamento e suas implicações em termos de complexidade amortizada, comparação com alternativas (endereçamento aberto) e justificativa de projeto.
+
+\placeholderAluno{Jafte}
+
+\subsection{Limitações e Ameaças à Validade}
+Tamanho do dataset, variação de ambiente de execução, sensibilidade à ordem de inserção e seleção dos nomes de busca.
+
+\placeholderAluno{Jafte}
+
+% =========================
+% 9. CONCLUSÕES
+% =========================
+\section{Conclusões}
+Síntese dos resultados observados, indicação de qual função apresentou melhor desempenho geral e por quais razões (menos colisões, melhor distribuição, menor clusterização, tempos inferiores).
+
+\placeholderAluno{Jafte}
+
+% =========================
+% 10. TRABALHOS FUTUROS
+% =========================
+\section{Trabalhos Futuros}
+Evolução para outras funções hash (SDBM, FNV-1a, Polynomial Rolling), comparação com endereçamento aberto, instrumentação de variância e testes de estresse com diferentes tamanhos de entrada.
+
+\placeholderAluno{Jafte}
+
+% =========================
+% 11. APÊNDICE (OPCIONAL): TRECHOS DE SAÍDA COMPLETA
+% =========================
+\section*{Apêndice A -- Saídas Completas do Console (Opcional)}
+% ==== Cole aqui dumps completos do console (inserção, busca, distribuição) ====
+\begin{lstlisting}[style=console]
+Lorem ipsum dolor sit amet — Jafte
+\end{lstlisting}
+
+\end{document}
