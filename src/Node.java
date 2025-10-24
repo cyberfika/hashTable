@@ -1,5 +1,5 @@
 /**
- * Representa um nó da lista encadeada.
+ * Representa um nó da lista encadeada (chave + ponteiro).
  */
 public class Node {
     private String chave;
@@ -22,3 +22,4 @@ public class Node {
         this.proximo = proximo;
     }
 }
+

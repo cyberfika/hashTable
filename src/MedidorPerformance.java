@@ -1,3 +1,6 @@
+/**
+ * Utilitário simples para medir tempos de inserção e busca.
+ */
 public class MedidorPerformance {
 
     public static long medirTempoInsercao(TabelaHash tabela, String[] chaves) {

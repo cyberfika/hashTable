@@ -1,6 +1,6 @@
 /**
- * Implementação manual de uma lista encadeada simples.
- * Utilizada para o tratamento de colisões (encadeamento).
+ * Implementação manual de lista encadeada simples (Singly Linked List).
+ * Usada para tratamento de colisões (chaining).
  */
 public class ListaEncadeada {
     private Node inicio;
@@ -11,7 +11,7 @@ public class ListaEncadeada {
         this.tamanho = 0;
     }
 
-    /** Insere uma nova chave no final da lista, se ainda não existir. */
+    /** Insere no final, evitando duplicatas. */
     public void inserir(String chave) {
         if (buscar(chave)) return;
 
@@ -28,7 +28,7 @@ public class ListaEncadeada {
         tamanho++;
     }
 
-    /** Busca uma chave na lista encadeada. */
+    /** Busca sequencial pela chave. */
     public boolean buscar(String chave) {
         Node atual = inicio;
         while (atual != null) {
@@ -38,12 +38,11 @@ public class ListaEncadeada {
         return false;
     }
 
-    /** Retorna o tamanho atual da lista. */
     public int getTamanho() {
         return tamanho;
     }
 
-    /** Retorna o primeiro nó (usado para rehashing). */
+    /** Retorna o primeiro nó (para rehashing). */
     public Node getInicio() {
         return inicio;
     }
