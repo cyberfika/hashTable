@@ -143,16 +143,16 @@ protected int calcularHash(String chave, int capacidade) {
 
 #### 📊 Resultados e Análises
 
-| Função Hash                   | Colisões | Redimensionamentos | Tempo Inserção (ms) | Tempo Busca (ms) | Fator de Carga |
-| ----------------------------- | -------- | ------------------ | ------------------- | ---------------- | -------------- |
-| Polynomial Rolling (Fernando) | 2020     | 8                  | 12.014              | 0.107            | 0.61           |
-| DJB2 (Renato)                 | 2007     | 8                  | 10.412              | 0.065            | 0.61           |
+| Função Hash | Colisões | Redimensionamentos | Tempo Inserção (ms) | Tempo Busca (ms) | Fator de Carga |
+| --------- | -------- | ------------------ | ------------------- | ---------------- | -------------- |
+| Polynomial Rolling | 2020     | 8                  | 12.014              | 0.107            | 0.61           |
+| DJB2      | 2007     | 8                  | 10.412              | 0.065            | 0.61           |
 
 ![Distribuição das Chaves](data/graphs/grafico_distribuicao_chaves.png)  
-*Figura 2 – Distribuição das Chaves por Posição.*
+*Figura 1 – Distribuição das Chaves por Posição.*
 
 ![Clusterização das Colisões](data/graphs/grafico_cluster_scatter.png)  
-*Figura 3 – Clusterização das Colisões por Posição.*
+*Figura 2 – Clusterização das Colisões por Posição.*
 
 ---
 
@@ -325,7 +325,7 @@ CONCLUSÃO COMPARATIVA
 ### 📊 **Diagrama de Classes**
 
 ![Diagrama de Classes](reportPDF/DiagramClasses.png)  
-*Figura 1 – Diagrama de Classes do Sistema.*
+*Figura 3 – Diagrama de Classes do Sistema.*
 
 ---
 
