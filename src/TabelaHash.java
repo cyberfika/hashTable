@@ -110,6 +110,22 @@ public abstract class TabelaHash {
         return dist;
     }
 
+    /**
+     * Retorna um vetor de colisões por posição (clusterização).
+     * Definição: para cada índice i, colisões_i = max(0, tamanhoLista_i - 1).
+     * Isso representa quantas inserções colidiram naquela posição.
+     */
+    public int[] getClusterizacaoArray() {
+        int[] dist = getDistribuicaoArray();
+        int[] cluster = new int[capacidade];
+        for (int i = 0; i < capacidade; i++) {
+            int s = dist[i];
+            cluster[i] = (s > 0) ? (s - 1) : 0;
+        }
+        return cluster;
+    }
+
+
     /** Histograma ASCII simples (pode ser colado no LaTeX). */
     public void mostrarDistribuicao() {
         for (int i = 0; i < capacidade; i++) {
