@@ -5,7 +5,7 @@
 **Curso:** Bacharelado em Sistemas de Informação — PUCPR  
 **Professora:** Marina de Lara  
 **Autores:**
-- **Fernando Alonso Piroga da Silva** – Implementação da Função Hash 1 (Método da Multiplicação)
+- **Fernando Alonso Piroga da Silva** – Implementação da Função Hash 1 (Polynomial Rolling Hash)
 - **Jafte Carneiro Fagundes da Silva** – Coordenação, Estrutura Base, Relatórios e Main  
 - **Renato Pestana Gouveia** – Implementação da Função Hash 2 (DJB2)
 
