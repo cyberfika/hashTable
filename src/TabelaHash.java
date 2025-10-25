@@ -1,3 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Classe abstrata base para Tabelas Hash:
  * - Encapsula encadeamento (ListaEncadeada[])
@@ -134,4 +138,68 @@ public abstract class TabelaHash {
             System.out.println();
         }
     }
+
+    // >>> ADIÇÃO PARA EXPORTAÇÃO CSV - INÍCIO
+
+    /**
+     * Exporta a distribuição de chaves (quantidade de elementos por posição da tabela)
+     * para um arquivo CSV.
+     */
+    public void exportarDistribuicaoCSV(String caminhoArquivo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
+            writer.write("posicao,quantidade_chaves\n");
+            for (int i = 0; i < tabela.length; i++) {
+                int quantidade = (tabela[i] == null) ? 0 : tabela[i].getTamanho();
+                writer.write(i + "," + quantidade + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao exportar distribuicao CSV: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Exporta a clusterização (tamanho das listas por posição) para um arquivo CSV.
+     */
+    public void exportarClusterizacaoCSV(String caminhoArquivo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
+            writer.write("posicao,tamanho_lista\n");
+            for (int i = 0; i < tabela.length; i++) {
+                int tamanhoLista = (tabela[i] == null) ? 0 : tabela[i].getTamanho();
+                writer.write(i + "," + tamanhoLista + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao exportar clusterizacao CSV: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Exporta o histórico do fator de carga e capacidade.
+     * Este método deve ser chamado durante as inserções, armazenando dados cumulativos.
+     */
+    public void exportarFatorCargaCSV(String caminhoArquivo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
+            writer.write(tamanho + "," + getLoadFactor() + "," + capacidade + "\n");
+        } catch (IOException e) {
+            System.err.println("Erro ao exportar fator de carga CSV: " + e.getMessage());
+        }
+    }
+
+    // <<< FIM DA ADIÇÃO
+
+
+    // >>> ADIÇÃO PARA EXPORTADORCSV - INÍCIO
+    /**
+     * Retorna a lista encadeada armazenada na posição indicada da tabela.
+     * Método de apoio para exportação de dados.
+     */
+    public ListaEncadeada getListaNaPosicao(int indice) {
+        if (indice < 0 || indice >= tabela.length) {
+            return null;
+        }
+        return tabela[indice];
+    }
+
+    // <<< FIM DA ADIÇÃO
+
+
 }

@@ -30,5 +30,16 @@ public class Main {
                 tabela2.getNomeFuncaoHash(), tabela2, tIns2, tBus2,
                 total
         );
+
+        // ============================================================
+        // EXPORTAÇÃO DE RESULTADOS PARA CSV (USANDO NOVA CLASSE)
+        // ============================================================
+        ExportadorCSV exportador = new ExportadorCSV();
+        exportador.exportarTudo(
+                tabela1, tabela2,
+                tIns1, tBus1,
+                tIns2, tBus2
+        );
+
     }
 }

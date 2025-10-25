@@ -12,6 +12,7 @@
 \usepackage{geometry}
 \usepackage{listings}
 \usepackage{booktabs}
+\usepackage{multirow}
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{amssymb}
@@ -36,7 +37,7 @@
 \begin{document}
 
 % CAPA
-\title{Relatório Técnico -- Comparativo de Funções Hash em Java}
+\title{Relatório Técnico \\ Comparativo de Funções Hash em Java}
 \author{Fernando Alonso Piroga da Silva \\ Jafte Carneiro Fagundes da Silva \\ Renato Pestana Gouveia}
 \date{\textbf{Pontifícia Universidade Católica do Paraná} \\ Resolução de Problemas Estruturados em Computação \\ Prof.ª Marina de Lara}
 \maketitle
@@ -79,7 +80,6 @@ A solução foi estruturada com ênfase em encapsulamento, abstração, herança
     \label{fig:minha_imagem}
 \end{figure}
 
-
 O projeto foi estruturado de forma orientada a objetos, com uma classe abstrata \texttt{TabelaHash} que define a estrutura base e o comportamento comum das tabelas. As classes concretas \texttt{TabelaHashMetodo1} e \texttt{TabelaHashMetodo2} sobrescrevem apenas o método de cálculo hash, garantindo baixo acoplamento e alto reuso de código.
 
 \subsection{Tratamento de Colisões}
@@ -91,8 +91,8 @@ Quando o fator de carga atinge o limite de 0,75, a tabela dobra de tamanho e tod
 \subsection{Funções Hash Utilizadas}
 
 \subsubsection{Função Hash 1 -- Polynomial Rolling Hash}
-O \textit{Polynomial Rolling Hash} é uma função de dispersão amplamente utilizada em algoritmos de correspondência de padrões, como o Rabin-Karp.
-Sua principal característica é representar a chave (string) como um polinômio, onde cada caractere contribui com um termo ponderado por uma base \(p\).
+O \textit{Polynomial Rolling Hash} é uma função de dispersão amplamente utilizada em algoritmos de correspondência de padrões, como o Rabin-Karp.  
+Sua principal característica é representar a chave (string) como um polinômio, onde cada caractere contribui com um termo ponderado por uma base \(p\).  
 A soma é calculada sob um módulo grande \(M\), garantindo que o valor não ultrapasse os limites numéricos e reduzindo colisões.
 
 Matematicamente, a função é definida como:
@@ -131,8 +131,8 @@ protected int calcularHash(String chave, int capacidade) {
 
 
 \subsubsection{Função Hash 2 -- DJB2}
-A função \textit{DJB2} foi criada por Daniel J. Bernstein e é uma das mais conhecidas por combinar boa dispersão, simplicidade e desempenho.
-Ela utiliza um processo iterativo de deslocamento e soma que distribui os bits da chave de forma eficiente.
+A função \textit{DJB2} foi criada por Daniel J. Bernstein e é uma das mais conhecidas por combinar boa dispersão, simplicidade e desempenho.  
+Ela utiliza um processo iterativo de deslocamento e soma que distribui os bits da chave de forma eficiente.  
 
 O algoritmo começa com uma constante inicial (\(h_0 = 5381\)) e, para cada caractere \(c_i\) da string, realiza a atualização:
 
@@ -140,7 +140,7 @@ O algoritmo começa com uma constante inicial (\(h_0 = 5381\)) e, para cada cara
 h_i = \left( (h_{i-1} \ll 5) + h_{i-1} + c_i \right)
 \]
 
-ou, equivalentemente, \( h_i = 33 \cdot h_{i-1} + c_i \).
+ou, equivalentemente, \( h_i = 33 \cdot h_{i-1} + c_i \).  
 Ao final, o resultado é ajustado para um número positivo e mapeado para o intervalo da capacidade da tabela.
 
 \subsubsubsection{Assinatura e Implementação (Java)}
@@ -157,8 +157,6 @@ protected int calcularHash(String chave, int capacidade) {
     return (int) (Math.abs(hash) % capacidade);
 }
 \end{lstlisting}
-
-
 
 
 \newpage
@@ -182,7 +180,7 @@ DJB2 & 2007 & 8 & 10,412 & 0,053 & 0,61 \\
 \subsection{Distribuição das Chaves por Posição}
 
 \begin{longtable}{|c|c|c|l|l|}
-\caption{Distribuição das Chaves por posição}
+\caption{Distribuição das Chaves por posição} \\
 \hline
 \textbf{Pos} & \textbf{Hash1} & \textbf{Hash2} & \textbf{Método 1: Polynomial Rolling Hash} & \textbf{Método 2: DJB2} \\
 \hline
@@ -263,17 +261,27 @@ DJB2 & 2007 & 8 & 10,412 & 0,053 & 0,61 \\
 \hline
 \end{longtable}
 
+\subsubsection{Gráfico de Distribuição das Chaves por Posição}
 
+A Figura~\ref{fig:distribuicao_chaves} apresenta a distribuição das chaves nas posições das duas tabelas hash após todas as inserções. O eixo X representa as posições da tabela (índices), enquanto o eixo Y indica a quantidade de chaves armazenadas em cada posição.
+
+Uma distribuição uniforme é desejável, pois reduz o número de colisões e garante tempo de acesso médio constante. Observa-se que ambas as funções produziram distribuições homogêneas, com no máximo 5 a 6 colisões por posição. A função DJB2 apresentou ligeiramente menor variação, indicando uma dispersão mais estável.\footnote{Os dados e gráficos apresentados neste relatório foram gerados a partir da execução do programa Java em ambiente IntelliJ IDEA 2025.1, utilizando OpenJDK 24. A coleta oficial de métricas ocorreu em \textbf{25 de outubro de 2025, às 16h36 (horário de Brasília)}.}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{grafico_distribuicao_chaves.png}
+  \caption{Distribuição das chaves por posição nas tabelas Hash 1 (Polynomial Rolling) e Hash 2 (DJB2).}
+  \label{fig:distribuicao_chaves}
+\end{figure}
 
 \subsection{Análise de Clusterização - Top 10 Posições Mais Congestionadas}
-
 
 \begin{table}[h!]
 \caption{Comparação das posições mais congestionadas em ambos os métodos de hash. }
 \centering
 \begin{tabular}{c|cc|cc}
 \toprule
-\multirow{\textbf{Rank}} & \multicolumn{2}{c|}{\textbf{Método 1: Polynomial Rolling Hash}} & \multicolumn{2}{c}{\textbf{Método 2: DJB2}} \\
+\textbf{Rank} & \multicolumn{2}{c|}{\textbf{Método 1: Polynomial Rolling Hash}} & \multicolumn{2}{c}{\textbf{Método 2: DJB2}} \\
 \cmidrule(lr){2-3} \cmidrule(lr){4-5}
 & \textbf{Posição} & \textbf{Colisões} & \textbf{Posição} & \textbf{Colisões} \\
 \midrule
@@ -289,13 +297,24 @@ DJB2 & 2007 & 8 & 10,412 & 0,053 & 0,61 \\
 10 & 3472 & 3 & 2221 & 3 \\
 \bottomrule
 \end{tabular}
-
 \end{table}
 
-\subsection{Análise dos Resultados}
-Os resultados demonstram que a função DJB2 apresentou desempenho ligeiramente superior, com menor número de colisões e tempos de inserção e busca mais baixos (Tabela 1). Ambas as funções exibiram um fator de carga final de 0,61 e o mesmo número de redimensionamentos (8), o que comprova consistência no processo de rehashing.
+Os resultados demonstram que a função DJB2 apresentou desempenho ligeiramente superior, com menor número de colisões e tempos de inserção e busca mais baixos (Tabela 1). Ambas as funções exibiram um fator de carga final de 0,61 e o mesmo número de redimensionamentos (8), o que comprova consistência no processo de \textit{rehashing}.
 
-A análise da distribuição das chaves mostra que a função DJB2 conseguiu espalhar os elementos de forma mais uniforme, reduzindo a formação de clusters densos. Já a função Polynomial Rolling apresentou pequenas concentrações em posições específicas.
+A análise da distribuição das chaves mostra que a função DJB2 conseguiu espalhar os elementos de forma mais uniforme, reduzindo a formação de clusters densos. Já a função \textit{Polynomial Rolling} apresentou pequenas concentrações em posições específicas.
+
+\subsubsection{Gráfico de Dispersão de Clusterização (Colisões por Posição)}
+
+A Figura~\ref{fig:dispersao_cluster} mostra a distribuição das colisões em cada posição da tabela hash. O eixo X representa as posições da tabela, enquanto o eixo Y indica o tamanho das listas encadeadas resultantes das colisões.
+Cada ponto no gráfico representa uma posição específica da tabela. Quanto maior o valor no eixo Y, maior o número de chaves que colidiram na mesma posição. Observa-se que a maioria das listas apresenta tamanho entre 1 e 3, com pouquíssimas ocorrências acima de 5, o que caracteriza um comportamento eficiente das funções hash.
+A função DJB2 apresentou uma dispersão mais homogênea, com menor concentração de colisões em posições específicas, enquanto a função Polynomial Rolling apresentou alguns pontos isolados com listas mais longas. Ambos os métodos, no entanto, mantiveram a clusterização sob controle, evidenciando uma boa uniformidade de distribuição.\footnote{Os dados e gráficos apresentados neste relatório foram gerados a partir da execução do programa Java em ambiente IntelliJ IDEA 2025.1, utilizando OpenJDK 24. A coleta oficial de métricas ocorreu em \textbf{25 de outubro de 2025, às 16h36 (horário de Brasília)}.}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{grafico_cluster_scatter.png}
+  \caption{Dispersão de clusterização (colisões por posição) nas funções Hash 1 (Polynomial Rolling) e Hash 2 (DJB2).}
+  \label{fig:dispersao_cluster}
+\end{figure}
 
 \newpage
 
@@ -303,12 +322,9 @@ A análise da distribuição das chaves mostra que a função DJB2 conseguiu esp
 \section{Conclusões}
 Com base nas métricas obtidas, conclui-se que a função DJB2 apresentou o melhor equilíbrio entre simplicidade e eficiência, demonstrando menor número de colisões e melhor uniformidade na dispersão das chaves.
 
-O método Polynomial Rolling apresentou bom desempenho, mas ligeiramente inferior quanto à distribuição. Ambas as abordagens, contudo, comprovaram a importância de escolher funções hash bem projetadas e de implementar corretamente o tratamento de colisões e o redimensionamento da tabela.
+O método \textit{Polynomial Rolling} apresentou bom desempenho, mas ligeiramente inferior quanto à distribuição. Ambas as abordagens, contudo, comprovaram a importância de escolher funções hash bem projetadas e de implementar corretamente o tratamento de colisões e o redimensionamento da tabela.
 
 Este trabalho também reforçou o domínio dos princípios de programação orientada a objetos, incluindo encapsulamento, herança e polimorfismo, aplicados a uma estrutura de dados clássica sem recorrer a bibliotecas prontas.
-
-\newpage
-
 
 
 \end{document}

@@ -1,5 +1,5 @@
 
-# 🧠 Implementação Manual de Tabelas Hash em Java
+# 🧠 Implementação de Tabelas Hash em Java
 
 **Disciplina:** Resolução de Problemas Estruturados em Computação  
 **Curso:** Bacharelado em Sistemas de Informação — PUCPR  
@@ -105,33 +105,57 @@ Classe **abstrata e polimórfica**, responsável por:
 
 ---
 
-### ⚡ **TabelaHashMetodo1.java (Fernando)**
+### ⚡ **TabelaHashMetodo1.java**
 
-Implementa o **Método da Multiplicação (Knuth)**:
-
-```java
-int hash = chave.hashCode();
-double A = 0.6180339887;
-double prod = hash * A;
-double frac = prod - Math.floor(prod);
-return (int) (capacidade * frac);
-```
-
----
-
-### 🔥 **TabelaHashMetodo2.java (Renato)**
-
-Implementa o **algoritmo DJB2**, eficiente e amplamente utilizado:
+Implementa o **Método Polynomial Rolling Hash**, uma função de complexidade média amplamente usada em algoritmos de comparação de strings.  
+Essa técnica calcula o hash combinando o valor ASCII de cada caractere multiplicado por uma constante base, com operação modular pela capacidade da tabela.
 
 ```java
-long hash = 5381;
-for (int i = 0; i < chave.length(); i++) {
-    hash = ((hash << 5) + hash) + chave.charAt(i);
+@Override
+protected int calcularHash(String chave, int capacidade) {
+    long hash = 0;
+    int p = 31; // base polinomial
+    for (int i = 0; i < chave.length(); i++) {
+        hash = (hash * p + chave.charAt(i)) % capacidade;
+    }
+    return (int) Math.abs(hash);
 }
-return (int) (Math.abs(hash) % capacidade);
 ```
 
 ---
+
+### 🔥 **TabelaHashMetodo2.java**
+
+Implementa o **algoritmo DJB2**, criado por **Daniel J. Bernstein**.  
+É um dos métodos de hashing mais conhecidos pela simplicidade e excelente dispersão de bits.  
+A função inicia com um valor base (`5381`) e, para cada caractere da string, multiplica o hash acumulado por 33 e soma o código ASCII do caractere.
+
+```java
+@Override
+protected int calcularHash(String chave, int capacidade) {
+    long hash = 5381;
+    for (int i = 0; i < chave.length(); i++) {
+        hash = ((hash << 5) + hash) + chave.charAt(i); // hash * 33 + c
+    }
+    return (int) (Math.abs(hash) % capacidade);
+}
+```
+
+#### 📊 Resultados e Análises
+
+| Função Hash                   | Colisões | Redimensionamentos | Tempo Inserção (ms) | Tempo Busca (ms) | Fator de Carga |
+| ----------------------------- | -------- | ------------------ | ------------------- | ---------------- | -------------- |
+| Polynomial Rolling (Fernando) | 2020     | 8                  | 12.014              | 0.107            | 0.61           |
+| DJB2 (Renato)                 | 2007     | 8                  | 10.412              | 0.065            | 0.61           |
+
+![Distribuição das Chaves](data/graphs/grafico_distribuicao_chaves.png)  
+*Figura 2 – Distribuição das Chaves por Posição.*
+
+![Clusterização das Colisões](data/graphs/grafico_cluster_scatter.png)  
+*Figura 3 – Clusterização das Colisões por Posição.*
+
+---
+
 
 ### 📚 **LeitorArquivo.java**
 
@@ -166,33 +190,142 @@ Gera o **relatório textual completo** com:
 
 Exemplo de saída:
 
+```ascii
+============================================================
+    COMPARAÇÃO DE FUNÇÕES HASH - RA03 (PUCPR)
+============================================================
+CONFIGURAÇÃO:
+  - Capacidade inicial: 32
+  - Fator de carga: 0.75
+  - Total de nomes inseridos: 5001
+  - Método de colisão: Encadeamento (Lista Encadeada manual)
+
+============================================================
+RESULTADOS - TABELA HASH 1 (Método 1: Polynomial Rolling Hash)
+============================================================
+  Total de colisões: 2020
+  Redimensionamentos: 8
+  Tempo de inserção: 13,976 ms
+  Tempo de busca: 0,065 ms
+  Fator de carga final: 0,61
+
+============================================================
+RESULTADOS - TABELA HASH 2 (Método 2: DJB2 (Daniel J. Bernstein))
+============================================================
+  Total de colisões: 2007
+  Redimensionamentos: 8
+  Tempo de inserção: 10,412 ms
+  Tempo de busca: 0,059 ms
+  Fator de carga final: 0,61
+
+============================================================
+DISTRIBUIÇÃO DAS CHAVES (primeiras 64 posições)
+============================================================
+Pos   | Hash1  | Hash2  | Método 1: Polynomial Rolling Hash | Método 2: DJB2 (Daniel J. Bernstein)
+--------------------------------------------------------------------------
+0     | 1      | 0      | █                        |                         
+1     | 1      | 0      | █                        |                         
+2     | 0      | 0      |                          |                         
+3     | 2      | 0      | ██                       |                         
+4     | 2      | 2      | ██                       | ██                      
+5     | 0      | 0      |                          |                         
+6     | 0      | 0      |                          |                         
+7     | 1      | 1      | █                        | █                       
+8     | 0      | 0      |                          |                         
+9     | 0      | 1      |                          | █                       
+10    | 0      | 1      |                          | █                       
+11    | 1      | 0      | █                        |                         
+12    | 1      | 0      | █                        |                         
+13    | 0      | 0      |                          |                         
+14    | 0      | 0      |                          |                         
+15    | 0      | 1      |                          | █                       
+16    | 0      | 1      |                          | █                       
+17    | 1      | 0      | █                        |                         
+18    | 0      | 0      |                          |                         
+19    | 0      | 1      |                          | █                       
+20    | 1      | 2      | █                        | ██                      
+21    | 1      | 0      | █                        |                         
+22    | 0      | 1      |                          | █                       
+23    | 0      | 0      |                          |                         
+24    | 0      | 2      |                          | ██                      
+25    | 0      | 0      |                          |                         
+26    | 0      | 0      |                          |                         
+27    | 1      | 1      | █                        | █                       
+28    | 0      | 3      |                          | ███                     
+29    | 0      | 0      |                          |                         
+30    | 0      | 1      |                          | █                       
+31    | 0      | 0      |                          |                         
+32    | 0      | 0      |                          |                         
+33    | 1      | 0      | █                        |                         
+34    | 1      | 0      | █                        |                         
+35    | 0      | 0      |                          |                         
+36    | 0      | 2      |                          | ██                      
+37    | 0      | 0      |                          |                         
+38    | 1      | 0      | █                        |                         
+39    | 0      | 0      |                          |                         
+40    | 0      | 1      |                          | █                       
+41    | 0      | 0      |                          |                         
+42    | 1      | 0      | █                        |                         
+43    | 0      | 0      |                          |                         
+44    | 1      | 1      | █                        | █                       
+45    | 0      | 0      |                          |                         
+46    | 0      | 2      |                          | ██                      
+47    | 0      | 0      |                          |                         
+48    | 0      | 0      |                          |                         
+49    | 1      | 0      | █                        |                         
+50    | 0      | 1      |                          | █                       
+51    | 0      | 1      |                          | █                       
+52    | 0      | 0      |                          |                         
+53    | 2      | 1      | ██                       | █                       
+54    | 0      | 0      |                          |                         
+55    | 0      | 1      |                          | █                       
+56    | 1      | 0      | █                        |                         
+57    | 1      | 0      | █                        |                         
+58    | 0      | 0      |                          |                         
+59    | 0      | 0      |                          |                         
+60    | 1      | 0      | █                        |                         
+61    | 0      | 0      |                          |                         
+62    | 0      | 1      |                          | █                       
+63    | 2      | 0      | ██                       |                         
+
+============================================================
+ANÁLISE DE CLUSTERIZAÇÃO (Top 10 posições mais congestionadas)
+============================================================
+Método 1: Polynomial Rolling Hash:
+  Posição 6138: 4 colisões
+  Posição 7148: 4 colisões
+  Posição 915: 3 colisões
+  Posição 1017: 3 colisões
+  Posição 1364: 3 colisões
+  Posição 1502: 3 colisões
+  Posição 1526: 3 colisões
+  Posição 2538: 3 colisões
+  Posição 2779: 3 colisões
+  Posição 3472: 3 colisões
+Método 2: DJB2 (Daniel J. Bernstein):
+  Posição 4615: 5 colisões
+  Posição 1831: 4 colisões
+  Posição 139: 3 colisões
+  Posição 231: 3 colisões
+  Posição 334: 3 colisões
+  Posição 415: 3 colisões
+  Posição 1036: 3 colisões
+  Posição 1171: 3 colisões
+  Posição 1809: 3 colisões
+  Posição 2221: 3 colisões
+
+============================================================
+CONCLUSÃO COMPARATIVA
+============================================================
+✓ MENOS colisões: Método 2: DJB2 (Daniel J. Bernstein)
+✓ MENOS redimensionamentos: Método 1: Polynomial Rolling Hash
+
 ```
-============================================================
-  COMPARAÇÃO DE FUNÇÕES HASH - TDE 03 (PUCPR)
-============================================================
-Total de nomes: 5000
 
-HASH 1 - Método da Multiplicação
-------------------------------------------------------------
-Colisões: 4892
-Redimensionamentos: 7
-Tempo inserção: 18 ms
-Tempo busca: 2 ms
-Fator de carga final: 1.22
+### 📊 **Diagrama de Classes**
 
-HASH 2 - DJB2
-------------------------------------------------------------
-Colisões: 4756
-Redimensionamentos: 7
-Tempo inserção: 16 ms
-Tempo busca: 1 ms
-Fator de carga final: 1.22
-
-============================================================
-CONCLUSÃO:
-DJB2 apresentou menos colisões.
-============================================================
-```
+![Diagrama de Classes](reportPDF/DiagramClasses.png)  
+*Figura 1 – Diagrama de Classes do Sistema.*
 
 ---
 
@@ -262,21 +395,7 @@ Os testes consistem em:
 
 ---
 
-## ⚖️ 9. Critérios de Avaliação (PUCPR)
-
-| Critério                           | Peso        | Implementado              |
-| ---------------------------------- | ----------- | ------------------------- |
-| **Funções hash distintas**         | Alto        | ✅                         |
-| **Tratamento de colisões**         | Alto        | ✅ Encadeamento            |
-| **Redimensionamento e rehashing**  | Crítico     | ✅ Automático              |
-| **Testes de eficiência completos** | Obrigatório | ✅ Todos                   |
-| **Orientação a Objetos**           | Fundamental | ✅ Padrões aplicados       |
-| **Relatório completo (LaTeX)**     | Obrigatório | ✅ Geração de dados pronta |
-| **Sem estruturas prontas do Java** | Crítico     | ✅ 100% manual             |
-
----
-
-## 🧠 10. Conclusões e Aprendizados
+## 🧠 09. Conclusões e Aprendizados
 
 O projeto proporcionou uma visão profunda sobre:
 
@@ -294,16 +413,7 @@ Além disso, o exercício reforça a importância de:
 
 ---
 
-## 📚 11. Referências
-
-* Cormen, T. H. *Introduction to Algorithms*. MIT Press, 2009.
-* Knuth, D. E. *The Art of Computer Programming, Vol. 3: Sorting and Searching*. Addison-Wesley, 1998.
-* Java Language Specification, Oracle Docs (JLS 17).
-
-
----
-
-## 🏁 12. Licença
+## 🏁 10. Licença
 
 Este projeto foi desenvolvido exclusivamente para fins acadêmicos na PUCPR.
 É proibida a reprodução total ou parcial sem autorização dos autores.

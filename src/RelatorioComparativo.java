@@ -101,6 +101,4 @@ public class RelatorioComparativo {
         for (int i = 0; i < n; i++) sb.append('█');
         return sb.toString();
     }
-
-
 }

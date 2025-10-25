@@ -1,0 +1,132 @@
+C:\Users\jafte\.jdks\openjdk-24\bin\java.exe "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2025.1\lib\idea_rt.jar=55091" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath E:\OneDrive\Documentos\PUCPR\Aulas\BCC\Periodo_4\RPEC\HashTable\out\production\Java Main
+============================================================
+    COMPARAÇÃO DE FUNÇÕES HASH - RA03 (PUCPR)
+============================================================
+CONFIGURAÇÃO:
+  - Capacidade inicial: 32
+  - Fator de carga: 0.75
+  - Total de nomes inseridos: 5001
+  - Método de colisão: Encadeamento (Lista Encadeada manual)
+
+============================================================
+RESULTADOS - TABELA HASH 1 (Método 1: Polynomial Rolling Hash)
+============================================================
+  Total de colisões: 2020
+  Redimensionamentos: 8
+  Tempo de inserção: 14,026 ms
+  Tempo de busca: 0,107 ms
+  Fator de carga final: 0,61
+
+============================================================
+RESULTADOS - TABELA HASH 2 (Método 2: DJB2 (Daniel J. Bernstein))
+============================================================
+  Total de colisões: 2007
+  Redimensionamentos: 8
+  Tempo de inserção: 12,004 ms
+  Tempo de busca: 0,053 ms
+  Fator de carga final: 0,61
+
+============================================================
+DISTRIBUIÇÃO DAS CHAVES (primeiras 64 posições)
+============================================================
+Pos   | Hash1  | Hash2  | Método 1: Polynomial Rolling Hash | Método 2: DJB2 (Daniel J. Bernstein)
+--------------------------------------------------------------------------
+0     | 1      | 0      | █                        |                         
+1     | 1      | 0      | █                        |                         
+2     | 0      | 0      |                          |                         
+3     | 2      | 0      | ██                       |                         
+4     | 2      | 2      | ██                       | ██                      
+5     | 0      | 0      |                          |                         
+6     | 0      | 0      |                          |                         
+7     | 1      | 1      | █                        | █                       
+8     | 0      | 0      |                          |                         
+9     | 0      | 1      |                          | █                       
+10    | 0      | 1      |                          | █                       
+11    | 1      | 0      | █                        |                         
+12    | 1      | 0      | █                        |                         
+13    | 0      | 0      |                          |                         
+14    | 0      | 0      |                          |                         
+15    | 0      | 1      |                          | █                       
+16    | 0      | 1      |                          | █                       
+17    | 1      | 0      | █                        |                         
+18    | 0      | 0      |                          |                         
+19    | 0      | 1      |                          | █                       
+20    | 1      | 2      | █                        | ██                      
+21    | 1      | 0      | █                        |                         
+22    | 0      | 1      |                          | █                       
+23    | 0      | 0      |                          |                         
+24    | 0      | 2      |                          | ██                      
+25    | 0      | 0      |                          |                         
+26    | 0      | 0      |                          |                         
+27    | 1      | 1      | █                        | █                       
+28    | 0      | 3      |                          | ███                     
+29    | 0      | 0      |                          |                         
+30    | 0      | 1      |                          | █                       
+31    | 0      | 0      |                          |                         
+32    | 0      | 0      |                          |                         
+33    | 1      | 0      | █                        |                         
+34    | 1      | 0      | █                        |                         
+35    | 0      | 0      |                          |                         
+36    | 0      | 2      |                          | ██                      
+37    | 0      | 0      |                          |                         
+38    | 1      | 0      | █                        |                         
+39    | 0      | 0      |                          |                         
+40    | 0      | 1      |                          | █                       
+41    | 0      | 0      |                          |                         
+42    | 1      | 0      | █                        |                         
+43    | 0      | 0      |                          |                         
+44    | 1      | 1      | █                        | █                       
+45    | 0      | 0      |                          |                         
+46    | 0      | 2      |                          | ██                      
+47    | 0      | 0      |                          |                         
+48    | 0      | 0      |                          |                         
+49    | 1      | 0      | █                        |                         
+50    | 0      | 1      |                          | █                       
+51    | 0      | 1      |                          | █                       
+52    | 0      | 0      |                          |                         
+53    | 2      | 1      | ██                       | █                       
+54    | 0      | 0      |                          |                         
+55    | 0      | 1      |                          | █                       
+56    | 1      | 0      | █                        |                         
+57    | 1      | 0      | █                        |                         
+58    | 0      | 0      |                          |                         
+59    | 0      | 0      |                          |                         
+60    | 1      | 0      | █                        |                         
+61    | 0      | 0      |                          |                         
+62    | 0      | 1      |                          | █                       
+63    | 2      | 0      | ██                       |                         
+
+============================================================
+ANÁLISE DE CLUSTERIZAÇÃO (Top 10 posições mais congestionadas)
+============================================================
+Método 1: Polynomial Rolling Hash:
+  Posição 6138: 4 colisões
+  Posição 7148: 4 colisões
+  Posição 915: 3 colisões
+  Posição 1017: 3 colisões
+  Posição 1364: 3 colisões
+  Posição 1502: 3 colisões
+  Posição 1526: 3 colisões
+  Posição 2538: 3 colisões
+  Posição 2779: 3 colisões
+  Posição 3472: 3 colisões
+Método 2: DJB2 (Daniel J. Bernstein):
+  Posição 4615: 5 colisões
+  Posição 1831: 4 colisões
+  Posição 139: 3 colisões
+  Posição 231: 3 colisões
+  Posição 334: 3 colisões
+  Posição 415: 3 colisões
+  Posição 1036: 3 colisões
+  Posição 1171: 3 colisões
+  Posição 1809: 3 colisões
+  Posição 2221: 3 colisões
+
+============================================================
+CONCLUSÃO COMPARATIVA
+============================================================
+✓ MENOS colisões: Método 2: DJB2 (Daniel J. Bernstein)
+✓ MENOS redimensionamentos: Método 1: Polynomial Rolling Hash
+
+
+Process finished with exit code 0
