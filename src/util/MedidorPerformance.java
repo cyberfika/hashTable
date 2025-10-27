@@ -1,3 +1,7 @@
+package util;
+
+import hashtable.TabelaHash;
+
 /**
  * Utilitário simples para medir tempos de inserção e busca (com nanoTime).
  * Retorna tempo em milissegundos com três casas decimais (double).

@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Representa um nó da lista encadeada (chave + ponteiro).
  */

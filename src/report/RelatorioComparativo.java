@@ -1,3 +1,7 @@
+package report;
+
+import hashtable.TabelaHash;
+
 /**
  * Impressão de relatório comparativo no console.
  * Sem uso de coleções prontas (somente prints).

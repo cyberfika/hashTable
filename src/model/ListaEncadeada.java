@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Implementação manual de lista encadeada simples (Singly Linked List).
  * Usada para tratamento de colisões (chaining).

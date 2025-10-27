@@ -28,14 +28,15 @@ projeto-hash/
 │   └── female_names.txt          # Arquivo de entrada com 5000 nomes
 ├── src/
 │   ├── Main.java                 # Classe principal (menu, execução e relatório)
-│   ├── Node.java                 # Nó da lista encadeada
-│   ├── ListaEncadeada.java       # Implementação manual do encadeamento
-│   ├── TabelaHash.java           # Classe abstrata (base comum)
-│   ├── TabelaHashMetodo1.java    # Implementação de Fernando
-│   ├── TabelaHashMetodo2.java    # Implementação de Renato
-│   ├── LeitorArquivo.java        # Utilitário para leitura de arquivo
-│   ├── MedidorPerformance.java   # Cronometragem de inserções/buscas
-│   └── RelatorioComparativo.java # Relatório final comparativo
+│   ├── model.Node.java                     # Nó da lista encadeada
+│   ├── model.ListaEncadeada.java           # Implementação manual do encadeamento
+│   ├── hashtable.TabelaHash.java           # Classe abstrata (base comum)
+│   ├── hashtable.TabelaHashMetodo1.java    # Implementação de Fernando
+│   ├── hashtable.TabelaHashMetodo2.java    # Implementação de Renato
+│   ├── util.LeitorArquivo.java             # Utilitário para leitura de arquivo
+│   ├── util.MedidorPerformance.java        # Cronometragem de inserções/buscas
+│   ├── report.ExportadorCSV.java           # Exportação de dados para CSV
+│   └── report.RelatorioComparativo.java    # Relatório final comparativo
 └── README.md
 
 ```
@@ -65,18 +66,18 @@ java -cp bin Main
 
 ## 🧠 4. Descrição das Classes
 
-### 🏗️ **Node.java**
+### 🏗️ **model.Node.java**
 
 Estrutura base de um nó para lista encadeada, contendo:
 
 * `String chave`
-* Ponteiro `Node proximo`
+* Ponteiro `model.Node proximo`
 
 Usada para armazenar as chaves (nomes) e lidar com colisões.
 
 ---
 
-### 🔗 **ListaEncadeada.java**
+### 🔗 **model.ListaEncadeada.java**
 
 Implementação **manual** de uma lista encadeada simples:
 
@@ -86,7 +87,7 @@ Implementação **manual** de uma lista encadeada simples:
 
 ---
 
-### 🧮 **TabelaHash.java (Abstrata)**
+### 🧮 **hashtable.TabelaHash.java (Abstrata)**
 
 Classe **abstrata e polimórfica**, responsável por:
 
@@ -105,7 +106,7 @@ Classe **abstrata e polimórfica**, responsável por:
 
 ---
 
-### ⚡ **TabelaHashMetodo1.java**
+### ⚡ **hashtable.TabelaHashMetodo1.java**
 
 Implementa o **Método Polynomial Rolling Hash**, uma função de complexidade média amplamente usada em algoritmos de comparação de strings.  
 Essa técnica calcula o hash combinando o valor ASCII de cada caractere multiplicado por uma constante base, com operação modular pela capacidade da tabela.
@@ -124,7 +125,7 @@ protected int calcularHash(String chave, int capacidade) {
 
 ---
 
-### 🔥 **TabelaHashMetodo2.java**
+### 🔥 **hashtable.TabelaHashMetodo2.java**
 
 Implementa o **algoritmo DJB2**, criado por **Daniel J. Bernstein**.  
 É um dos métodos de hashing mais conhecidos pela simplicidade e excelente dispersão de bits.  
@@ -157,7 +158,7 @@ protected int calcularHash(String chave, int capacidade) {
 ---
 
 
-### 📚 **LeitorArquivo.java**
+### 📚 **util.LeitorArquivo.java**
 
 Leitura manual de arquivo `.txt`:
 
@@ -167,18 +168,18 @@ Leitura manual de arquivo `.txt`:
 
 ---
 
-### ⏱️ **MedidorPerformance.java**
+### ⏱️ **util.MedidorPerformance.java**
 
 Classe auxiliar para medir tempos de execução:
 
-* `medirTempoInsercao(TabelaHash tabela, String[] chaves)`
-* `medirTempoBusca(TabelaHash tabela, String[] chaves)`
+* `medirTempoInsercao(hashtable.TabelaHash tabela, String[] chaves)`
+* `medirTempoBusca(hashtable.TabelaHash tabela, String[] chaves)`
 
 Retorna o tempo em **milissegundos**.
 
 ---
 
-### 📊 **RelatorioComparativo.java**
+### 📊 **report.RelatorioComparativo.java**
 
 Gera o **relatório textual completo** com:
 
@@ -334,10 +335,10 @@ CONCLUSÃO COMPARATIVA
 | Conceito                   | Aplicação no Projeto                                             |
 | -------------------------- | ---------------------------------------------------------------- |
 | **Encapsulamento**         | Todos os atributos são privados e acessados via métodos públicos |
-| **Abstração**              | `TabelaHash` define a estrutura comum de todas as tabelas        |
-| **Herança**                | `TabelaHashMetodo1` e `TabelaHashMetodo2` herdam de `TabelaHash` |
+| **Abstração**              | `hashtable.TabelaHash` define a estrutura comum de todas as tabelas        |
+| **Herança**                | `hashtable.TabelaHashMetodo1` e `hashtable.TabelaHashMetodo2` herdam de `hashtable.TabelaHash` |
 | **Polimorfismo**           | O método `calcularHash()` é sobrescrito em cada implementação    |
-| **Composição**             | A Tabela Hash contém listas encadeadas compostas por `Node`      |
+| **Composição**             | A Tabela Hash contém listas encadeadas compostas por `model.Node`      |
 | **Tratamento de exceções** | Leitura de arquivo e redimensionamento com verificações seguras  |
 
 ---
@@ -355,7 +356,7 @@ CONCLUSÃO COMPARATIVA
 ### 🔹 Colisão
 
 * Implementada via **encadeamento**
-* Cada posição da tabela contém uma **ListaEncadeada** manual
+* Cada posição da tabela contém uma **model.ListaEncadeada** manual
 
 ### 🔹 Redimensionamento
 

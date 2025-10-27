@@ -1,10 +1,15 @@
+package hashtable;
+
+import model.ListaEncadeada;
+import model.Node;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
 /**
  * Classe abstrata base para Tabelas Hash:
- * - Encapsula encadeamento (ListaEncadeada[])
+ * - Encapsula encadeamento (model.ListaEncadeada[])
  * - Redimensionamento e rehashing
  * - Métricas: colisões, redimensionamentos, fator de carga
  * - Sem uso de estruturas prontas do Java

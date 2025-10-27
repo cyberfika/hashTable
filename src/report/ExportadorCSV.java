@@ -1,3 +1,7 @@
+package report;
+
+import hashtable.TabelaHash;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,7 +11,7 @@ import java.io.File;
  * Classe responsável por exportar todos os dados do programa
  * em formato CSV, para posterior geração de gráficos e análises.
  *
- * Esta classe é independente e não altera o RelatorioComparativo.java.
+ * Esta classe é independente e não altera o report.RelatorioComparativo.java.
  * Ela utiliza as tabelas hash e as métricas já calculadas no Main.
  *
  * Diretório padrão de saída: data/results/

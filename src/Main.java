@@ -1,3 +1,11 @@
+import hashtable.TabelaHash;
+import hashtable.TabelaHashMetodo1;
+import hashtable.TabelaHashMetodo2;
+import report.ExportadorCSV;
+import report.RelatorioComparativo;
+import util.LeitorArquivo;
+import util.MedidorPerformance;
+
 public class Main {
     public static void main(String[] args) {
         final int CAPACIDADE_INICIAL = 32;

@@ -1,3 +1,5 @@
+package hashtable;
+
 /**
  * Implementação da Tabela Hash usando algoritmo Polynomial Rolling Hash
  */
