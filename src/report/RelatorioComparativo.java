@@ -40,11 +40,21 @@ public class RelatorioComparativo {
         System.out.println("\n============================================================");
         System.out.println("CONCLUSÃO COMPARATIVA");
         System.out.println("============================================================");
-        System.out.println("✓ MENOS colisões: " +
-                (t1.getNumeroColisoes() <= t2.getNumeroColisoes() ? func1 : func2));
-        System.out.println("✓ MENOS redimensionamentos: " +
-                (t1.getNumeroRedimensionamentos() <= t2.getNumeroRedimensionamentos() ? func1 : func2));
-        System.out.println();
+        if (t1.getNumeroColisoes() < t2.getNumeroColisoes()) {
+            System.out.println("✓ MENOS colisões: " + func1);
+        } else if (t2.getNumeroColisoes() < t1.getNumeroColisoes()) {
+            System.out.println("✓ MENOS colisões: " + func2);
+        } else {
+            System.out.println("✓ MENOS colisões: empate (" + func1 + " e " + func2 + ")");
+        }
+
+        if (t1.getNumeroRedimensionamentos() < t2.getNumeroRedimensionamentos()) {
+            System.out.println("✓ MENOS redimensionamentos: " + func1);
+        } else if (t2.getNumeroRedimensionamentos() < t1.getNumeroRedimensionamentos()) {
+            System.out.println("✓ MENOS redimensionamentos: " + func2);
+        } else {
+            System.out.println("✓ MENOS redimensionamentos: empate (" + func1 + " e " + func2 + ")");
+        }
     }
 
 

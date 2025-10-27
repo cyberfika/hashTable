@@ -1,3 +1,0 @@
-funcao,colisoes,redimensionamentos,tempo_insercao_ms,tempo_busca_ms,fator_carga_final
-Método 1: Polynomial Rolling Hash,2020,8,3.763,0.012,0.61
-Método 2: DJB2 (Daniel J. Bernstein),2007,8,2.825,0.013,0.61
