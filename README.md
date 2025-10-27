@@ -7,7 +7,7 @@
 **Autores:**
 - **Fernando Alonso Piroga da Silva** – Implementação da Função Hash 1 (Polynomial Rolling Hash)
 - **Jafte Carneiro Fagundes da Silva** – Coordenação, Estrutura Base, Testes, Diagramas, Relatórios e Main  
-- **Renato Pestana Gouveia** – Implementação da Função Hash 2 (DJB2)
+- **Renato Pestana de Gouveia** – Implementação da Função Hash 2 (DJB2)
 
 ---
 
